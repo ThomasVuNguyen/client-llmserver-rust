@@ -23,9 +23,15 @@ body {
 header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
   padding-bottom: 15px;
   border-bottom: 1px solid #444;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
 }
 
 .logo {
@@ -46,6 +52,79 @@ header {
 header h1 {
   color: #ff6600;
   font-size: 24px;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.stream-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.stream-toggle {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.stream-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #ff6600;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+#clear-button {
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+}
+
+#clear-button:hover {
+  background-color: #c82333;
 }
 
 #chat {
@@ -78,6 +157,27 @@ header h1 {
   align-self: flex-start;
   background-color: #3a3a3a;
   color: #e0e0e0;
+}
+
+.assistant.streaming {
+  border-left: 3px solid #ff6600;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { border-left-color: #ff6600; }
+  50% { border-left-color: #ff9966; }
+  100% { border-left-color: #ff6600; }
+}
+
+.cursor {
+  color: #ff6600;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 .response-time {
@@ -148,7 +248,7 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* Hiệu ứng đang gõ */
+/* Hiệu ứng đang gõ cho non-streaming */
 .typing-indicator {
   display: flex;
   align-items: center;
@@ -182,5 +282,33 @@ footer a:hover {
   }
   30% {
     transform: translateY(-5px);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .header-controls {
+    justify-content: center;
+  }
+  
+  .message {
+    max-width: 95%;
+  }
+  
+  #message-form {
+    flex-direction: column;
+  }
+  
+  #input, #send-button {
+    width: 100%;
   }
 }

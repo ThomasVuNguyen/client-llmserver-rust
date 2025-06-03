@@ -8,10 +8,23 @@
 <body>
   <div class="container">
     <header>
-      <div class="logo">
-        <img src="https://orangepivn.b-cdn.net/wp-content/uploads/2018/05/logo1-1.png" alt="Orange Pi Việt Nam Logo">
+      <div class="header-left">
+        <div class="logo">
+          <img src="https://orangepivn.b-cdn.net/wp-content/uploads/2018/05/logo1-1.png" alt="Orange Pi Việt Nam Logo">
+        </div>
+        <h1>LLMServer-Chat Client</h1>
       </div>
-      <h1>LLMServer-Chat Client</h1>
+      
+      <div class="header-controls">
+        <div class="stream-control">
+          <span>Streaming:</span>
+          <label class="stream-toggle">
+            <input type="checkbox" id="stream-toggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <button id="clear-button">Xóa Chat</button>
+      </div>
     </header>
 
     <div id="chat">
@@ -27,7 +40,7 @@
 
     <div class="input-area">
       <form id="message-form">
-        <input id="input" name="message" type="text" placeholder="Nhập tin nhắn..." autofocus>
+        <input id="input" name="message" type="text" placeholder="Nhập tin nhắn... (Streaming bật)" autofocus>
         <button id="send-button" type="submit">Gửi</button>
       </form>
     </div>
@@ -38,5 +51,23 @@
   </div>
 
   <script src="{{ url_for('static', filename='script.js') }}"></script>
+  
+  <script>
+    // Update placeholder text based on streaming toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const streamToggle = document.getElementById('stream-toggle');
+      const messageInput = document.getElementById('input');
+      
+      if (streamToggle && messageInput) {
+        streamToggle.addEventListener('change', function() {
+          if (this.checked) {
+            messageInput.placeholder = 'Nhập tin nhắn... (Streaming bật)';
+          } else {
+            messageInput.placeholder = 'Nhập tin nhắn... (Streaming tắt)';
+          }
+        });
+      }
+    });
+  </script>
 </body>
 </html>

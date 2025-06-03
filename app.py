@@ -31,7 +31,7 @@ def send_message():
         response = requests.post(
             "http://localhost:8080/v1/chat/completions",
             json={
-                "model": "gemma-3-1b-it-rk3588-1.2.0",
+                "model": "Qwen3-1.7B-RKLLM-v1.2.0",
                 "messages": chat_history
             }
         )
@@ -41,8 +41,17 @@ def send_message():
         response_time = round(end_time - start_time, 2)
         
         response_data = response.json()
-        ai_response = response_data["choices"][0]["message"]["content"]
+            # Debug: Print the entire response structure
+        print("=== FULL RESPONSE STRUCTURE ===")
+        print(json.dumps(response_data, indent=2))
+        print("================================")
         
+        # Also print the type and keys
+        print(f"Response type: {type(response_data)}")
+        if isinstance(response_data, dict):
+            print(f"Top-level keys: {list(response_data.keys())}")
+        ai_response = response_data["choices"][0]["message"]["content"]
+        # ai_response = response_data
         # Thêm phản hồi vào lịch sử chat kèm thời gian phản hồi
         chat_history.append({
             "role": "assistant", 
